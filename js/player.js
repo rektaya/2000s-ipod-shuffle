@@ -160,6 +160,11 @@
   let activeMixtape = null;
   let PLAYLIST = MIXTAPES.pop.tracks;
 
+  function randomMixtapeKey() {
+    const keys = Object.keys(MIXTAPES);
+    return keys[Math.floor(Math.random() * keys.length)];
+  }
+
   const COLORS = {
     silver: { c1:"#e7e9eb", c2:"#a8adb3", ring:"#ffffff", ring2:"#f0f1f2", icon:"#8a8d91" },
     blue:   { c1:"#5aa7e0", c2:"#1f5fa8", ring:"#ffffff", ring2:"#f0f1f2", icon:"#8a8d91" },
@@ -240,6 +245,7 @@
   }
 
   function togglePlay() {
+    if (!activeMixtape) { selectMixtape(randomMixtapeKey()); return; }
     if (!ytReady) { ensurePlayerAndPlay(); return; }
     if (isPlaying) {
       ytPlayer.pauseVideo();
