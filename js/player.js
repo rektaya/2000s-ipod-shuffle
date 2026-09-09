@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  // ---------- mixtapes: 10 crates of 2000s hits, split by genre ----------
+  // ---------- mixtapes: 10 crates of 2000s hits, split by genre, 10 tracks each ----------
   const MIXTAPES = {
     pop: {
       name: "Pop Hits",
@@ -9,7 +9,13 @@
         { title: "Rihanna — Umbrella", id: "CvBfHwUxHIk" },
         { title: "Black Eyed Peas — I Gotta Feeling", id: "uSD4vsh1zDA" },
         { title: "Beyoncé — Crazy In Love", id: "ViwtNLUqkMY" },
-        { title: "Kelly Clarkson — Since U Been Gone", id: "2xUgTLfRVeM" }
+        { title: "Kelly Clarkson — Since U Been Gone", id: "R7UrFYvl5TE" },
+        { title: "Christina Aguilera — Beautiful", id: "eAfyFTzZDMM" },
+        { title: "Katy Perry — Hot n Cold", id: "7TRc4MfCjA0" },
+        { title: "Lady Gaga — Just Dance", id: "2Abk1jAONjw" },
+        { title: "P!nk — So What", id: "FJfFZqTlWrQ" },
+        { title: "Miley Cyrus — Party in the U.S.A.", id: "OWjMlBy8n-I" },
+        { title: "Justin Timberlake — SexyBack", id: "gEzr8-v-OO8" }
       ]
     },
     rnb: {
@@ -17,7 +23,14 @@
       tracks: [
         { title: "Usher — Yeah!", id: "GxBSyx85Kp8" },
         { title: "Alicia Keys — No One", id: "rywUS-ohqeE" },
-        { title: "Destiny's Child — Say My Name", id: "sQgd6MccwZc" }
+        { title: "Destiny's Child — Say My Name", id: "sQgd6MccwZc" },
+        { title: "Ne-Yo — So Sick", id: "IxszlJppRQI" },
+        { title: "Chris Brown — Run It!", id: "mWGvmdyF3bU" },
+        { title: "Ciara — Goodies", id: "YtC92pzp5vw" },
+        { title: "Mario — Let Me Love You", id: "H64QG4UsrGI" },
+        { title: "John Legend — Ordinary People", id: "PIh07c_P4hc" },
+        { title: "Rihanna — Unfaithful", id: "rp4UwPZfRis" },
+        { title: "Beyoncé — Irreplaceable", id: "Rb7sVoMYuFc" }
       ]
     },
     hiphop: {
@@ -25,7 +38,14 @@
       tracks: [
         { title: "50 Cent — In Da Club", id: "5qm8PH4xAss" },
         { title: "Kanye West — Gold Digger", id: "PE0ynzc6-e4" },
-        { title: "Missy Elliott — Get Ur Freak On", id: "FPoKiGQzbSQ" }
+        { title: "Missy Elliott — Get Ur Freak On", id: "FPoKiGQzbSQ" },
+        { title: "Ludacris — Stand Up", id: "pZG7IK99OvI" },
+        { title: "Nelly — Hot in Herre", id: "GeZZr_p6vB8" },
+        { title: "OutKast — Ms. Jackson", id: "EUVo8epKwv0" },
+        { title: "Jay-Z — 99 Problems", id: "6dVdd3RsbSE" },
+        { title: "T.I. — Whatever You Like", id: "Kgdr2uytpDI" },
+        { title: "Lil Wayne — Lollipop", id: "2IH8tNQAzSs" },
+        { title: "Flo Rida — Low", id: "BTE3D-bhquY" }
       ]
     },
     dance: {
@@ -33,7 +53,14 @@
       tracks: [
         { title: "Daft Punk — One More Time", id: "FGBhQbmPwH8" },
         { title: "OutKast — Hey Ya!", id: "PWgvGjAhvIw" },
-        { title: "Britney Spears — Toxic", id: "LOZuxwVk7TU" }
+        { title: "Britney Spears — Toxic", id: "LOZuxwVk7TU" },
+        { title: "Black Eyed Peas — Boom Boom Pow", id: "4m48GqaOz90" },
+        { title: "David Guetta ft. Kelly Rowland — When Love Takes Over", id: "shUDuIYpAQ8" },
+        { title: "Rihanna — Don't Stop the Music", id: "-U51yeIFJCs" },
+        { title: "Cascada — Everytime We Touch", id: "mzcPjIOLDTU" },
+        { title: "Kelis — Milkshake", id: "6AwXKJoKJz4" },
+        { title: "Sean Paul — Get Busy", id: "Y4mP1m_lmJM" },
+        { title: "Benny Benassi — Satisfaction", id: "V5bYDhZBFLA" }
       ]
     },
     altrock: {
@@ -41,7 +68,14 @@
       tracks: [
         { title: "Eminem — Lose Yourself", id: "xFYQQPAOz7Y" },
         { title: "Gorillaz — Feel Good Inc.", id: "HyHNuVaZJ-k" },
-        { title: "Avril Lavigne — Complicated", id: "HPPj6viIBmU" }
+        { title: "Avril Lavigne — Complicated", id: "HPPj6viIBmU" },
+        { title: "Green Day — American Idiot", id: "_vbUJ2LtFF8" },
+        { title: "Coldplay — Clocks", id: "8IsFmQeQTF0" },
+        { title: "Kings of Leon — Sex on Fire", id: "RF0HhrwIwp0" },
+        { title: "Foo Fighters — Best of You", id: "h_L4Rixya64" },
+        { title: "Red Hot Chili Peppers — Can't Stop", id: "8DyziWtkfBw" },
+        { title: "Muse — Starlight", id: "pEyj2qvRwso" },
+        { title: "OK Go — Here It Goes Again", id: "dTAAsCNK7RA" }
       ]
     },
     indie: {
@@ -49,7 +83,14 @@
       tracks: [
         { title: "The Killers — Mr. Brightside", id: "gGdGFtwCNBE" },
         { title: "Franz Ferdinand — Take Me Out", id: "GhCXAiNz9Jo" },
-        { title: "Arctic Monkeys — I Bet You Look Good on the Dancefloor", id: "pK7egZaT3hs" }
+        { title: "Arctic Monkeys — I Bet You Look Good on the Dancefloor", id: "pK7egZaT3hs" },
+        { title: "Phoenix — 1901", id: "36_4xjLFjM0" },
+        { title: "MGMT — Kids", id: "fe4EK4HSPkI" },
+        { title: "The Strokes — Last Nite", id: "TOypSnKFHrE" },
+        { title: "Modest Mouse — Float On", id: "CTAud5O7Qqk" },
+        { title: "Death Cab for Cutie — Soul Meets Body", id: "25PHWCE_Iu0" },
+        { title: "The White Stripes — Seven Nation Army", id: "0J2QdDbelmY" },
+        { title: "Bloc Party — Banquet", id: "vdkmhquF60o" }
       ]
     },
     numetal: {
@@ -57,7 +98,14 @@
       tracks: [
         { title: "Linkin Park — In the End", id: "eVTXPUF4Oz4" },
         { title: "Evanescence — Bring Me to Life", id: "3YxaaGgTQYM" },
-        { title: "System of a Down — Chop Suey!", id: "OyLnXriLhpA" }
+        { title: "System of a Down — Chop Suey!", id: "OyLnXriLhpA" },
+        { title: "Linkin Park — Numb", id: "8Jwj_lpwnZk" },
+        { title: "Papa Roach — Last Resort", id: "VUaM3psXB74" },
+        { title: "Disturbed — Down with the Sickness", id: "HkhfL0pnMPQ" },
+        { title: "Korn — Falling Away from Me", id: "2s3iGpDqQpQ" },
+        { title: "Slipknot — Duality", id: "6fVE8kSM43I" },
+        { title: "Godsmack — I Stand Alone", id: "OYjZK_6i37M" },
+        { title: "Deftones — Change (In the House of Flies)", id: "WPpDyIJdasg" }
       ]
     },
     punk: {
@@ -65,7 +113,14 @@
       tracks: [
         { title: "Fall Out Boy — Sugar, We're Goin Down", id: "uhG-vLZrb-g" },
         { title: "Paramore — Misery Business", id: "Heu3xuKfoPo" },
-        { title: "My Chemical Romance — Welcome to the Black Parade", id: "RRKJiM9Njr8" }
+        { title: "My Chemical Romance — Welcome to the Black Parade", id: "RRKJiM9Njr8" },
+        { title: "Blink-182 — All the Small Things", id: "9Ht5RZpzPqw" },
+        { title: "Good Charlotte — The Anthem", id: "desJKYvdq9A" },
+        { title: "Simple Plan — Welcome to My Life", id: "Lt0WP9ZBNiY" },
+        { title: "Panic! at the Disco — I Write Sins Not Tragedies", id: "XioHVMjtICI" },
+        { title: "Sum 41 — In Too Deep", id: "JoC3PUBmhFs" },
+        { title: "Yellowcard — Ocean Avenue", id: "X9fLbfzCqWw" },
+        { title: "The All-American Rejects — Move Along", id: "XleOkGsYgO8" }
       ]
     },
     latin: {
@@ -73,7 +128,14 @@
       tracks: [
         { title: "Shakira — Hips Don't Lie", id: "pakogSCXdmY" },
         { title: "Daddy Yankee — Gasolina", id: "QhuMh97C0yc" },
-        { title: "Enrique Iglesias — Hero", id: "koJlIGDImiU" }
+        { title: "Enrique Iglesias — Hero", id: "koJlIGDImiU" },
+        { title: "Ricky Martin — Livin' la Vida Loca", id: "UxQ7PAerVdE" },
+        { title: "Juanes — La Camisa Negra", id: "6X3T51JfwFQ" },
+        { title: "Wisin & Yandel — Rakata", id: "giMhlfc6pzw" },
+        { title: "Don Omar — Dale Don Dale", id: "gwGcyRWnOSw" },
+        { title: "RBD — Sálvame", id: "3dQG32_OMg0" },
+        { title: "Aventura — Obsesión", id: "yC9u00F-NF0" },
+        { title: "Marc Anthony — I Need to Know", id: "fLVzw9wVd9o" }
       ]
     },
     country: {
@@ -81,7 +143,14 @@
       tracks: [
         { title: "Carrie Underwood — Before He Cheats", id: "WaSy8yy-mr8" },
         { title: "Rascal Flatts — Life Is a Highway", id: "5tXh_MfrMe0" },
-        { title: "Taylor Swift — Love Story", id: "LHxXaY7NR3w" }
+        { title: "Taylor Swift — Love Story", id: "LHxXaY7NR3w" },
+        { title: "Toby Keith — Courtesy of the Red, White and Blue", id: "ruNrdmjcNTc" },
+        { title: "Kenny Chesney — The Good Stuff", id: "lYQZJ9NUzYU" },
+        { title: "Tim McGraw — Live Like You Were Dying", id: "_9TShlMkQnc" },
+        { title: "Sugarland — Baby Girl", id: "hPzIX3MpMss" },
+        { title: "Dixie Chicks — Landslide", id: "J4_wXPZ1Bnk" },
+        { title: "Big & Rich — Save a Horse (Ride a Cowboy)", id: "HflDc7PUT2g" },
+        { title: "Keith Urban — Days Go By", id: "uxGegHHvk4w" }
       ]
     }
   };
