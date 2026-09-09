@@ -293,7 +293,11 @@
     PLAYLIST = MIXTAPES[key].tracks;
     currentIndex = 0;
     document.querySelectorAll(".cassette").forEach(c => c.classList.toggle("active", c.dataset.mixtape === key));
-    loadTrack(0, isPlaying);
+    if (ytReady) {
+      loadTrack(0, true);
+    } else {
+      ensurePlayerAndPlay();
+    }
   }
   document.querySelectorAll(".cassette").forEach(c => {
     c.addEventListener("click", () => selectMixtape(c.dataset.mixtape));
