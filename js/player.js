@@ -192,7 +192,7 @@
   let volume = 70;
 
   // ---------- YouTube IFrame API ----------
-  window.onYouTubeIframeAPIReady = function () {
+  function initYouTubePlayer() {
     ytPlayer = new YT.Player("ytplayer", {
       height: "180",
       width: "320",
@@ -209,7 +209,13 @@
         }
       }
     });
-  };
+  }
+  window.onYouTubeIframeAPIReady = initYouTubePlayer;
+  // race guard: the iframe_api script sometimes finishes loading (and tries
+  // to call the ready callback) before this script has even defined it —
+  // observed in production but not locally. If the API is already usable
+  // by the time we get here, just init directly instead of waiting forever.
+  if (window.YT && window.YT.Player) initYouTubePlayer();
 
   function onPlayerStateChange(e) {
     if (e.data === YT.PlayerState.ENDED) next();
