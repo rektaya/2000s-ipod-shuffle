@@ -155,8 +155,10 @@
     }
   };
 
-  let activeMixtape = "pop";
-  let PLAYLIST = MIXTAPES[activeMixtape].tracks;
+  // no mixtape is selected by default — the center play button still has a
+  // playlist to fall back on (Pop Hits), it's just not shown as active
+  let activeMixtape = null;
+  let PLAYLIST = MIXTAPES.pop.tracks;
 
   const COLORS = {
     silver: { c1:"#e7e9eb", c2:"#a8adb3", ring:"#ffffff", ring2:"#f0f1f2", icon:"#8a8d91" },
