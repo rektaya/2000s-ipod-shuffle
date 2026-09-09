@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPod Shuffle — 2000s</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="mixtape-rack left" aria-label="Mixtapes">
+  <button class="cassette active" data-mixtape="pop" style="--tape:#ef476f;" title="Pop Hits">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Pop Hits</span>
+  </button>
+  <button class="cassette" data-mixtape="rnb" style="--tape:#9b5de5;" title="R&amp;B">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">R&amp;B</span>
+  </button>
+  <button class="cassette" data-mixtape="hiphop" style="--tape:#f3a712;" title="Hip-Hop">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Hip-Hop</span>
+  </button>
+  <button class="cassette" data-mixtape="dance" style="--tape:#06d6a0;" title="Dance Party">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Dance Party</span>
+  </button>
+  <button class="cassette" data-mixtape="altrock" style="--tape:#4f8fd1;" title="Alt Rock">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Alt Rock</span>
+  </button>
+</div>
+
+<div class="mixtape-rack right" aria-label="Mixtapes">
+  <button class="cassette" data-mixtape="indie" style="--tape:#2ec4b6;" title="Indie">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Indie</span>
+  </button>
+  <button class="cassette" data-mixtape="numetal" style="--tape:#8a1c1c;" title="Nu-Metal">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Nu-Metal</span>
+  </button>
+  <button class="cassette" data-mixtape="punk" style="--tape:#ff5964;" title="Punk &amp; Emo">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Punk &amp; Emo</span>
+  </button>
+  <button class="cassette" data-mixtape="latin" style="--tape:#ff9f1c;" title="Latin">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Latin</span>
+  </button>
+  <button class="cassette" data-mixtape="country" style="--tape:#a97142;" title="Country">
+    <span class="cassette-reels"><i></i><i></i></span>
+    <span class="cassette-label">Country</span>
+  </button>
+</div>
+
+<div class="scene">
+  <div class="stage" id="stage">
+
+    <div class="ipod" id="ipod">
+      <div class="top-details">
+        <span class="jack-hole"></span>
+        <button class="hold-switch" id="powerSwitch" role="switch" aria-checked="false" aria-label="Питание"></button>
+      </div>
+
+      <div class="body" id="body">
+        <div class="body-sheen"></div>
+
+        <button class="color-cycle" id="colorCycle" aria-label="Сменить цвет" title="Сменить цвет"></button>
+
+        <div class="ring-wrap">
+          <div class="ring">
+            <button class="seg seg-vol-up" id="btnVolUp" aria-label="Volume up" title="Volume up">
+              <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+            </button>
+            <button class="seg seg-vol-down" id="btnVolDown" aria-label="Volume down" title="Volume down">
+              <svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 12h16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+            </button>
+            <button class="seg seg-prev" id="btnPrev" aria-label="Previous" title="Previous"></button>
+            <button class="seg seg-next" id="btnNext" aria-label="Next" title="Next"></button>
+            <div class="ring-hole">
+              <button class="center-btn" id="btnPlay" aria-label="Play/Pause" title="Play/Pause">
+                <svg id="playIcon" viewBox="0 0 24 24" width="19" height="19"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" width="19" height="19" style="display:none"><rect x="4" y="3" width="5" height="18" fill="currentColor"/><rect x="15" y="3" width="5" height="18" fill="currentColor"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="ytplayer"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="js/player.js"></script>
+</body>
+</html>
