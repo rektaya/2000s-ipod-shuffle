@@ -31,12 +31,12 @@ html,body{
   position:fixed;
   left:50%;
   top:50%;
-  width:340px;
+  width:442px;
   height:auto;
-  transform:translate(-46%,-54%) rotate(12deg);
+  transform:translate(-62%,-54%) rotate(12deg);
   z-index:0;
   pointer-events:none;
-  filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));
+  filter:brightness(1.35) drop-shadow(0 6px 8px rgba(0,0,0,.3));
 }
 
 /* ---------- mixtape cassette racks, both edges — half tucked off-screen ---------- */
