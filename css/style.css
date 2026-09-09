@@ -31,7 +31,7 @@ html,body{
   position:fixed;
   left:calc(50% + 170px);
   bottom:3%;
-  width:680px;
+  width:340px;
   height:auto;
   transform:rotate(8deg);
   z-index:1;
