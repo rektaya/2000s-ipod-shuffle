@@ -26,6 +26,19 @@ html,body{
   user-select:none;
 }
 
+/* ---------- earbuds, tossed on the desk as decoration ---------- */
+.earbuds-decor{
+  position:fixed;
+  left:calc(50% + 150px);
+  bottom:2%;
+  width:150px;
+  height:auto;
+  transform:rotate(8deg);
+  z-index:1;
+  pointer-events:none;
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.35));
+}
+
 /* ---------- mixtape cassette racks, both edges — half tucked off-screen ---------- */
 .mixtape-rack{
   position:fixed;
