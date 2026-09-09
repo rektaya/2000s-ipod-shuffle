@@ -26,15 +26,15 @@ html,body{
   user-select:none;
 }
 
-/* ---------- earbuds, tossed on the desk as decoration ---------- */
+/* ---------- earbuds, tucked behind the ipod on the desk ---------- */
 .earbuds-decor{
   position:fixed;
-  left:calc(50% + 170px);
-  bottom:3%;
+  left:50%;
+  top:50%;
   width:340px;
   height:auto;
-  transform:rotate(8deg);
-  z-index:1;
+  transform:translate(-46%,-54%) rotate(12deg);
+  z-index:0;
   pointer-events:none;
   filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));
 }
