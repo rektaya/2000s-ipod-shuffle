@@ -130,8 +130,8 @@ html,body{
 }
 .ipod:active{cursor:grabbing;}
 
-/* headphone jack (decorative) + hold-switch nub (doubles as power button)
-   on the top edge — the only physical control, no floating page UI */
+/* headphone jack + hold nub, purely decorative on the top edge —
+   the player has no power switch, it's always on */
 .top-details{
   position:absolute;
   top:6px;
@@ -141,6 +141,7 @@ html,body{
   display:flex;
   justify-content:space-between;
   padding:0 40px;
+  pointer-events:none;
 }
 .jack-hole{
   width:12px;
@@ -148,22 +149,6 @@ html,body{
   border-radius:3px;
   background:linear-gradient(180deg,#e2e4e7,#8d9095 55%,#6a6d71);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.6), 0 1px 1px rgba(0,0,0,.3);
-  pointer-events:none;
-}
-.hold-switch{
-  width:16px;
-  height:9px;
-  padding:0;
-  border:none;
-  border-radius:3px;
-  background:linear-gradient(180deg,#e2e4e7,#8d9095 55%,#6a6d71);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.6), 0 1px 1px rgba(0,0,0,.3);
-  cursor:pointer;
-  transition:background .2s ease, box-shadow .2s ease;
-}
-.hold-switch.on{
-  background:linear-gradient(180deg,#7bee8f,var(--accent) 60%,#1f8f3a);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.6), 0 0 6px 1px rgba(52,199,89,.7);
 }
 
 /* color-cycle dot, mounted in a corner of the body — tap to step to the

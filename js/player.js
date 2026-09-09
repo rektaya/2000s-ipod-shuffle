@@ -172,14 +172,12 @@
   const stage = $("#stage");
   const ipod = $("#ipod");
   const bodyEl = $("#body");
-  const powerSwitch = $("#powerSwitch");
   const playIcon = $("#playIcon");
   const pauseIcon = $("#pauseIcon");
   const colorCycle = $("#colorCycle");
   const COLOR_ORDER = ["silver", "blue", "green", "orange", "pink", "dark"];
   let colorIndex = 0;
 
-  let power = false;
   let ytPlayer = null;
   let ytReady = false;
   let currentIndex = 0;
@@ -200,7 +198,7 @@
         },
         onStateChange: onPlayerStateChange,
         onError: () => {
-          setTimeout(() => power && next(), 1200);
+          setTimeout(next, 1200);
         }
       }
     });
@@ -240,7 +238,6 @@
   }
 
   function togglePlay() {
-    if (!power) return;
     if (!ytReady) { ensurePlayerAndPlay(); return; }
     if (isPlaying) {
       ytPlayer.pauseVideo();
@@ -254,33 +251,16 @@
   }
 
   function next() {
-    if (!power) return;
     loadTrack(currentIndex + 1, true);
   }
   function prev() {
-    if (!power) return;
     loadTrack(currentIndex - 1, true);
   }
 
   function changeVolume(delta) {
-    if (!power) return;
     volume = Math.max(0, Math.min(100, volume + delta));
     if (ytReady) ytPlayer.setVolume(volume);
   }
-
-  // ---------- power switch ----------
-  function setPower(on) {
-    power = on;
-    powerSwitch.classList.toggle("on", on);
-    powerSwitch.setAttribute("aria-checked", String(on));
-    if (on) {
-      loadTrack(currentIndex, false);
-    } else {
-      if (ytReady && isPlaying) ytPlayer.pauseVideo();
-    }
-  }
-
-  powerSwitch.addEventListener("click", () => setPower(!power));
 
   $("#btnPlay").addEventListener("click", togglePlay);
   $("#btnNext").addEventListener("click", next);
@@ -313,7 +293,7 @@
     PLAYLIST = MIXTAPES[key].tracks;
     currentIndex = 0;
     document.querySelectorAll(".cassette").forEach(c => c.classList.toggle("active", c.dataset.mixtape === key));
-    if (power) loadTrack(0, isPlaying);
+    loadTrack(0, isPlaying);
   }
   document.querySelectorAll(".cassette").forEach(c => {
     c.addEventListener("click", () => selectMixtape(c.dataset.mixtape));
@@ -375,7 +355,7 @@
 
   function onPointerDown(e) {
     // never hijack a press that started on an actual control (play, prev,
-    // next, vol, power, color dot) even if it sits inside the corner zone
+    // next, vol, color dot) even if it sits inside the corner zone
     if (e.target.closest("button")) return;
     if (!isNearCorner(e.clientX, e.clientY)) return;
     dragging = true;
