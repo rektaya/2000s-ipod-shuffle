@@ -233,7 +233,7 @@
     currentIndex = ((i % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
     const track = PLAYLIST[currentIndex];
     if (ytReady) {
-      if (autoplay) ytPlayer.loadVideoById(track.id);
+      if (autoplay) { flashHideVideo(); ytPlayer.loadVideoById(track.id); }
       else ytPlayer.cueVideoById(track.id);
     }
   }
@@ -255,11 +255,13 @@
     if (!activeMixtape) { selectMixtape(randomMixtapeKey()); return; }
     if (!ytReady) { ensurePlayerAndPlay(); return; }
     if (isPlaying) {
+      flashHideVideo();
       ytPlayer.pauseVideo();
     } else {
       if (ytPlayer.getPlayerState() === -1 || ytPlayer.getPlayerState() === YT.PlayerState.CUED) {
         ensurePlayerAndPlay();
       } else {
+        flashHideVideo();
         ytPlayer.playVideo();
       }
     }
@@ -306,6 +308,16 @@
   // wood desk while a mixtape is selected; deselecting brings the desk back
   function showVideoBg() { videoBg.classList.add("visible"); }
   function hideVideoBg() { videoBg.classList.remove("visible"); }
+
+  // YouTube flashes its own big center play/pause glyph on every state
+  // change (no API flag turns that off) — briefly cover the video with a
+  // near-opaque overlay so that glyph never actually shows through.
+  let flashTimer = null;
+  function flashHideVideo() {
+    videoBg.classList.add("flash-hide");
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(() => videoBg.classList.remove("flash-hide"), 650);
+  }
 
   function selectMixtape(key) {
     if (!MIXTAPES[key]) return;
