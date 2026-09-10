@@ -26,19 +26,6 @@ html,body{
   user-select:none;
 }
 
-/* ---------- earbuds, tucked behind the ipod on the desk ---------- */
-.earbuds-decor{
-  position:fixed;
-  left:50%;
-  top:50%;
-  width:477px;
-  height:auto;
-  transform:translate(-62%,-54%) rotate(12deg);
-  z-index:0;
-  pointer-events:none;
-  filter:url(#sharpen) brightness(1.35) drop-shadow(0 6px 8px rgba(0,0,0,.3));
-}
-
 /* ---------- mixtape cassette racks, both edges — half tucked off-screen ---------- */
 .mixtape-rack{
   position:fixed;
