@@ -334,11 +334,11 @@
     c.addEventListener("click", () => selectMixtape(c.dataset.mixtape));
   });
 
-  // ---------- drag-to-spin (grab a corner, keeps spinning while held) ----------
-  const CORNER_ZONE = 50; // px from each visual corner considered "grabbable"
+  // ---------- drag-to-spin (grab a corner) + drag-to-move (grab the body) ----------
+  const CORNER_ZONE = 50; // px from each visual corner considered "grabbable" for spin
   const INITIAL_ROTATION = -5; // just a slight tilt off vertical, no perspective skew
 
-  let dragging = false;
+  let mode = null; // "spin" | "move" | null
   let lastAngle = 0;
   let rotation = INITIAL_ROTATION;
   let velocity = 0;
@@ -346,6 +346,10 @@
   let spinRAF = null;
   let resetTimer = null;
   let movedDuringDrag = false;
+
+  let posX = 0, posY = 0; // free-drag offset, in px, relative to resting position
+  let moveStartX = 0, moveStartY = 0;
+  let startPosX = 0, startPosY = 0;
 
   function suppressNextClick(e) {
     e.stopPropagation();
@@ -385,50 +389,73 @@
   }
 
   function renderStageTransform() {
-    stage.style.transform = `rotate(${rotation}deg)`;
+    stage.style.transform = `translate(${posX}px, ${posY}px) rotate(${rotation}deg)`;
   }
 
   function onPointerDown(e) {
     // never hijack a press that started on an actual control (play, prev,
     // next, vol, color dot) even if it sits inside the corner zone
     if (e.target.closest("button")) return;
-    if (!isNearCorner(e.clientX, e.clientY)) return;
-    dragging = true;
-    movedDuringDrag = false;
-    cancelAnimationFrame(spinRAF);
-    clearTimeout(resetTimer);
-    stage.classList.remove("reset-anim");
-    lastAngle = angleFromCenter(e.clientX, e.clientY);
-    lastTime = performance.now();
-    velocity = 0;
-    ipod.setPointerCapture && ipod.setPointerCapture(e.pointerId);
+    const onIpod = !!e.target.closest("#ipod");
+
+    if (isNearCorner(e.clientX, e.clientY)) {
+      mode = "spin";
+      movedDuringDrag = false;
+      cancelAnimationFrame(spinRAF);
+      clearTimeout(resetTimer);
+      stage.classList.remove("reset-anim");
+      lastAngle = angleFromCenter(e.clientX, e.clientY);
+      lastTime = performance.now();
+      velocity = 0;
+      ipod.setPointerCapture && ipod.setPointerCapture(e.pointerId);
+    } else if (onIpod) {
+      mode = "move";
+      movedDuringDrag = false;
+      cancelAnimationFrame(spinRAF);
+      clearTimeout(resetTimer);
+      stage.classList.remove("reset-anim");
+      moveStartX = e.clientX;
+      moveStartY = e.clientY;
+      startPosX = posX;
+      startPosY = posY;
+      ipod.setPointerCapture && ipod.setPointerCapture(e.pointerId);
+    }
   }
 
-  // While the pointer stays down, every move keeps rotating the player live —
-  // it does not need to be released to spin.
+  // While the pointer stays down, every move keeps rotating (spin) or
+  // translating (move) the player live — it does not need to be released.
   function onPointerMove(e) {
-    if (!dragging) return;
-    const angle = angleFromCenter(e.clientX, e.clientY);
-    let delta = angle - lastAngle;
-    if (delta > 180) delta -= 360;
-    if (delta < -180) delta += 360;
-    if (Math.abs(delta) > 0.3) movedDuringDrag = true;
-    const now = performance.now();
-    const dt = Math.max(now - lastTime, 1);
-    velocity = delta / dt * 16.6; // deg per frame(~60fps), used for release inertia
-    rotation += delta;
-    lastAngle = angle;
-    lastTime = now;
-    renderStageTransform();
+    if (mode === "spin") {
+      const angle = angleFromCenter(e.clientX, e.clientY);
+      let delta = angle - lastAngle;
+      if (delta > 180) delta -= 360;
+      if (delta < -180) delta += 360;
+      if (Math.abs(delta) > 0.3) movedDuringDrag = true;
+      const now = performance.now();
+      const dt = Math.max(now - lastTime, 1);
+      velocity = delta / dt * 16.6; // deg per frame(~60fps), used for release inertia
+      rotation += delta;
+      lastAngle = angle;
+      lastTime = now;
+      renderStageTransform();
+    } else if (mode === "move") {
+      const dx = e.clientX - moveStartX;
+      const dy = e.clientY - moveStartY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) movedDuringDrag = true;
+      posX = startPosX + dx;
+      posY = startPosY + dy;
+      renderStageTransform();
+    }
   }
 
   function onPointerUp() {
-    if (!dragging) return;
-    dragging = false;
+    if (!mode) return;
+    const wasSpin = mode === "spin";
+    mode = null;
     if (movedDuringDrag) {
       window.addEventListener("click", suppressNextClick, { capture: true, once: true });
     }
-    spin();
+    if (wasSpin) spin();
   }
 
   function spin() {
@@ -446,10 +473,12 @@
 
   function resetRotation() {
     cancelAnimationFrame(spinRAF);
-    dragging = false;
+    mode = null;
     velocity = 0;
     stage.classList.add("reset-anim");
     rotation = INITIAL_ROTATION;
+    posX = 0;
+    posY = 0;
     renderStageTransform();
     clearTimeout(resetTimer);
     resetTimer = setTimeout(() => stage.classList.remove("reset-anim"), 460);
