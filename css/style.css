@@ -26,6 +26,40 @@ html,body{
   user-select:none;
 }
 
+/* ---------- video background: the currently playing track's YouTube
+   video, dimmed, shown only while a mixtape is selected — otherwise
+   the plain wood desk (body background) stays visible ---------- */
+.video-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .5s ease;
+}
+.video-bg.visible{ opacity:1; }
+.video-bg-frame{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:100vw;
+  height:56.25vw; /* 16:9 */
+  min-height:100vh;
+  min-width:177.78vh; /* 16:9 */
+  transform:translate(-50%,-50%);
+}
+.video-bg-frame #ytplayer,
+.video-bg-frame iframe{
+  width:100% !important;
+  height:100% !important;
+}
+.video-bg-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(8,7,5,.72);
+}
+
 /* ---------- mixtape cassette racks, both edges — half tucked off-screen ---------- */
 .mixtape-rack{
   position:fixed;
@@ -325,10 +359,5 @@ html,body{
 .center-btn:active{transform:scale(.94);}
 
 #ytplayer{
-  position:absolute;
-  top:-9999px;
-  left:-9999px;
-  width:320px;
-  height:180px;
   pointer-events:none;
 }

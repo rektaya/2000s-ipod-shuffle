@@ -182,6 +182,7 @@
   const playIcon = $("#playIcon");
   const pauseIcon = $("#pauseIcon");
   const colorCycle = $("#colorCycle");
+  const videoBg = $("#videoBg");
   const COLOR_ORDER = ["silver", "blue", "green", "orange", "pink", "dark"];
   let colorIndex = 0;
 
@@ -300,19 +301,35 @@
 
   applyColor(COLOR_ORDER[colorIndex]);
 
-  // ---------- mixtapes (cassette rack, left side) ----------
+  // ---------- mixtapes (cassette racks) ----------
+  // video background: the playing track's video, dimmed, replaces the
+  // wood desk while a mixtape is selected; deselecting brings the desk back
+  function showVideoBg() { videoBg.classList.add("visible"); }
+  function hideVideoBg() { videoBg.classList.remove("visible"); }
+
   function selectMixtape(key) {
-    if (!MIXTAPES[key] || key === activeMixtape) return;
+    if (!MIXTAPES[key]) return;
+    if (key === activeMixtape) { deselectMixtape(); return; }
     activeMixtape = key;
     PLAYLIST = MIXTAPES[key].tracks;
     currentIndex = 0;
     document.querySelectorAll(".cassette").forEach(c => c.classList.toggle("active", c.dataset.mixtape === key));
+    showVideoBg();
     if (ytReady) {
       loadTrack(0, true);
     } else {
       ensurePlayerAndPlay();
     }
   }
+
+  function deselectMixtape() {
+    if (!activeMixtape) return;
+    activeMixtape = null;
+    document.querySelectorAll(".cassette").forEach(c => c.classList.remove("active"));
+    hideVideoBg();
+    if (ytReady && isPlaying) ytPlayer.pauseVideo();
+  }
+
   document.querySelectorAll(".cassette").forEach(c => {
     c.addEventListener("click", () => selectMixtape(c.dataset.mixtape));
   });
