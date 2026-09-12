@@ -158,6 +158,7 @@ html,body{
 .stage{
   position:relative;
   transform:rotate(-5deg);
+  transform-origin:46% 54%;
   will-change:transform;
   transition:none;
   touch-action:none;

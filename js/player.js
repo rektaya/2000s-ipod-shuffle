@@ -350,6 +350,10 @@
   const CORNER_ZONE = 50; // px from each visual corner considered "grabbable" for spin
   const INITIAL_ROTATION = -5; // just a slight tilt off vertical, no perspective skew
 
+  const SPIN_SLIP = 0.14; // how much a spin-drag also slides the body, not just rotates it
+  const SPIN_SLIP_INERTIA = 0.05; // lighter coupling for the coast-to-stop phase, so a single fast flick can't fling it off the table
+  const MAX_SLIP_V = 6; // px/frame cap on the coast-to-stop drift
+
   let mode = null; // "spin" | "move" | null
   let lastAngle = 0;
   let rotation = INITIAL_ROTATION;
@@ -358,6 +362,9 @@
   let spinRAF = null;
   let resetTimer = null;
   let movedDuringDrag = false;
+
+  let lastPointerX = 0, lastPointerY = 0;
+  let slipVX = 0, slipVY = 0; // px/frame drift left over from the spin drag, decays like velocity
 
   let posX = 0, posY = 0; // free-drag offset, in px, relative to resting position
   let moveStartX = 0, moveStartY = 0;
@@ -419,6 +426,10 @@
       lastAngle = angleFromCenter(e.clientX, e.clientY);
       lastTime = performance.now();
       velocity = 0;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+      slipVX = 0;
+      slipVY = 0;
       ipod.setPointerCapture && ipod.setPointerCapture(e.pointerId);
     } else if (onIpod) {
       mode = "move";
@@ -449,6 +460,20 @@
       rotation += delta;
       lastAngle = angle;
       lastTime = now;
+
+      // spinning it isn't perfectly stationary — the hand pulling a corner
+      // around also drags the whole body a little, so it can end up in a
+      // different spot on the table instead of snapping back to the axis
+      const rawDX = e.clientX - lastPointerX;
+      const rawDY = e.clientY - lastPointerY;
+      posX += rawDX * SPIN_SLIP;
+      posY += rawDY * SPIN_SLIP;
+      const perFrame = (dt > 0 ? 16.6 / dt : 0) * SPIN_SLIP_INERTIA;
+      slipVX = Math.max(-MAX_SLIP_V, Math.min(MAX_SLIP_V, rawDX * perFrame));
+      slipVY = Math.max(-MAX_SLIP_V, Math.min(MAX_SLIP_V, rawDY * perFrame));
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+
       renderStageTransform();
     } else if (mode === "move") {
       const dx = e.clientX - moveStartX;
@@ -475,8 +500,12 @@
     function frame() {
       velocity *= friction;
       rotation += velocity;
+      slipVX *= friction;
+      slipVY *= friction;
+      posX += slipVX;
+      posY += slipVY;
       renderStageTransform();
-      if (Math.abs(velocity) > 0.15) {
+      if (Math.abs(velocity) > 0.15 || Math.abs(slipVX) > 0.15 || Math.abs(slipVY) > 0.15) {
         spinRAF = requestAnimationFrame(frame);
       }
     }
